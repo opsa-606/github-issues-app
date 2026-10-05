@@ -1,60 +1,20 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { TaskTracker } from './components/TaskTracker';
 
-interface UserProfile {
-  id: number;
-  name: string;
-  details?: {
-    email: string;
-    address?: {
-      city: string;
-      zip: string;
-    };
-  };
-  orders?: { id: number; title: string; price: number }[];
-}
-
-export default function App() {
-  const [user, setUser] = useState<UserProfile | null>(null);
-  const [loading, setLoading] = useState<boolean>(false);
-
-  const fetchUserData = () => {
-    setLoading(true);
-    setTimeout(() => {
-      // Імітація відповіді з сервера з неповною або некоректною структурою
-      setUser({
-        id: 101,
-        name: 'Олексій Іваненко',
-        // details відсутній в відповіді сервера!
-      });
-      setLoading(false);
-    }, 800);
-  };
-
-  const calculateTotal = () => {
-    return (user?.orders ?? []).reduce((sum, item) => sum + item.price, 0);
-  };
-
+const App: React.FC = () => {
   return (
-    <div style={{ padding: '24px', fontFamily: 'sans-serif', maxWidth: '600px' }}>
-      <h2>Панель користувача (AI Debugging Demo)</h2>
-      
-      <button 
-        onClick={fetchUserData}
-        style={{ padding: '10px 16px', background: '#2563eb', color: '#fff', border: 'none', borderRadius: '4px', cursor: 'pointer' }}
-      >
-        {loading ? 'Завантаження...' : 'Завантажити профіль'}
-      </button>
-
-      {user && (
-        <div style={{ marginTop: '20px', border: '1px solid #ccc', padding: '16px', borderRadius: '6px' }}>
-          <h3>{user.name}</h3>
-          
-          <p><strong>Місто:</strong> {user.details?.address?.city ?? 'не вказано'}</p>
-
-          <h4>Замовлення:</h4>
-          <p>Загальна сума: {calculateTotal()} грн</p>
-        </div>
-      )}
+    <div style={{ minHeight: '100vh', backgroundColor: '#0d1117', color: '#c9d1d9', padding: '40px 20px', fontFamily: 'Arial, sans-serif' }}>
+      <header style={{ textAlign: 'center', marginBottom: '30px' }}>
+        <h1 style={{ color: '#58a6ff', margin: '0 0 10px 0' }}>Практична робота 1.7</h1>
+        <p style={{ color: '#8b949e', fontSize: '16px' }}>
+          Платформа GitHub: репозиторії, Issues, Pull Requests, захист гілок
+        </p>
+      </header>
+      <main>
+        <TaskTracker />
+      </main>
     </div>
   );
-}
+};
+
+export default App;
